@@ -103,6 +103,12 @@ Cada tarefa salva no arquivo possui a seguinte estrutura:
 - Se o ID nao for numero: `Invalid task ID. It must be a number.`
 - Se o ID nao existir: `Task with ID <id> not found.`
 
+## Referencia do desafio
+
+Este projeto foi desenvolvido com base no desafio proposto pelo roadmap.sh:
+
+- https://roadmap.sh/projects/task-tracker
+
 ## Licenca
 
 Este projeto pode ser utilizado para fins de estudo e portfolio.
