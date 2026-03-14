@@ -1,0 +1,23 @@
+[
+  {
+    "Id": 1,
+    "Description": "Comprar p\u00E3o",
+    "Status": "todo",
+    "CreatedAt": "2026-03-14T11:30:33.1370366-03:00",
+    "UpdatedAt": "2026-03-14T11:30:33.1383422-03:00"
+  },
+  {
+    "Id": 2,
+    "Description": "Comprar arroz",
+    "Status": "done",
+    "CreatedAt": "2026-03-14T11:35:17.1010867-03:00",
+    "UpdatedAt": "2026-03-14T11:36:04.2317464-03:00"
+  },
+  {
+    "Id": 3,
+    "Description": "Comprar arroz 2",
+    "Status": "todo",
+    "CreatedAt": "2026-03-14T11:35:20.9427029-03:00",
+    "UpdatedAt": "2026-03-14T11:35:20.9427224-03:00"
+  }
+]

@@ -1,4 +1,7 @@
-﻿if (args.Length == 0)
+﻿using TaskTrackerCLI.Services;
+var taskService = new TaskService();
+
+if (args.Length == 0)
 {
     Console.WriteLine("No command provided.");
     return;
@@ -21,7 +24,7 @@ switch (command)
         break;
 
     case "list":
-        Console.WriteLine("Listing tasks...");
+        ListTasks(args);
         break;
 
     case "mark-done":
@@ -45,8 +48,8 @@ void AddTask(string[] args)
         return;
     }
 
-    var descricao = args[1];
-    Console.WriteLine("Task added successfully");
+    var description = args[1];
+    taskService.AddTask(description);
 }
 
 void UpdateTask(string[] args)
@@ -57,10 +60,12 @@ void UpdateTask(string[] args)
         return;
     }
 
-    var taskId = args[1];
-    var novaDescricao = args[2];
+    if (!TryGetTaskId(args, out var taskId))
+        return;
 
-    Console.WriteLine($"Task {taskId} updated successfully");
+    var description = args[2];
+
+    taskService.UpdateTask(taskId, description);
 }
 
 void DeleteTask(string[] args)
@@ -71,8 +76,10 @@ void DeleteTask(string[] args)
         return;
     }
 
-    var taskId = args[1];
-    Console.WriteLine($"Task {taskId} deleted successfully");
+    if (!TryGetTaskId(args, out var taskId))
+        return;
+
+    taskService.DeleteTask(taskId);
 }
 
 void MarkDone(string[] args)
@@ -83,8 +90,9 @@ void MarkDone(string[] args)
         return;
     }
 
-    var taskId = args[1];
-    Console.WriteLine($"Task {taskId} marked as done.");
+    if (!TryGetTaskId(args, out var taskId))
+        return;
+    taskService.MarkDone(taskId);
 }
 
 void MarkInProgress(string[] args)
@@ -95,6 +103,51 @@ void MarkInProgress(string[] args)
         return;
     }
 
-    var taskId = args[1];
-    Console.WriteLine($"Task {taskId} marked as in progress.");
+    if (!TryGetTaskId(args, out var taskId))
+        return;
+    taskService.MarkInProgress(taskId);
+}
+
+void ListTasks(string[] args)
+{
+    if (args.Length == 1)
+    {
+        taskService.ListTasks();
+        return;
+    }
+
+    var status = args[1].ToLower();
+
+    switch (status)
+    {
+        case "done":
+        case "todo":
+        case "in-progress":
+            taskService.ListTasks(status);
+            break;
+
+        default:
+            Console.WriteLine("Invalid status. Use: done, todo, or in-progress.");
+            break;
+    }
+}
+
+
+bool TryGetTaskId(string[] args, out int taskId)
+{
+    taskId = 0;
+
+    if (args.Length < 2)
+    {
+        Console.WriteLine("Please provide a task ID.");
+        return false;
+    }
+
+    if (!int.TryParse(args[1], out taskId))
+    {
+        Console.WriteLine("Invalid task ID. It must be a number.");
+        return false;
+    }
+
+    return true;
 }
